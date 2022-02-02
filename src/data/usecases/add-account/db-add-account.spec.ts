@@ -10,7 +10,7 @@ const makeEncrypter = (): Encrypter => {
   return new EncrypterStub()
 }
 
-const makeAddAccountRepositry = (): AddAccountRepository => {
+const makeAddAccountRepository = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
     async add (accountData: AddAccountModel): Promise<AccountModel> {
       const fakeAccount = {
@@ -33,7 +33,7 @@ interface SutTypes {
 
 const makeSut = (): SutTypes => {
   const encrypterStub = makeEncrypter()
-  const addAccountRepositoryStub = makeAddAccountRepositry()
+  const addAccountRepositoryStub = makeAddAccountRepository()
   const sut = new DbAddAccount(encrypterStub, addAccountRepositoryStub)
   return {
     sut,
@@ -58,6 +58,18 @@ describe('DbAddAccount Usecase', () => {
   test('Should throw if Encrypter throws', async () => {
     const { sut, encrypterStub } = makeSut()
     jest.spyOn(encrypterStub, 'encrypt').mockRejectedValueOnce(Error())
+    const accountData = {
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'valid_password'
+    }
+    const promise = sut.add(accountData)
+    await expect(promise).rejects.toThrow()
+  })
+
+  test('Should throw if AddAccountRepository throws', async () => {
+    const { sut, addAccountRepositoryStub } = makeSut()
+    jest.spyOn(addAccountRepositoryStub, 'add').mockRejectedValueOnce(Error())
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
