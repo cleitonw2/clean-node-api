@@ -1,3 +1,3 @@
 export * from '../../../domain/models/account'
 export * from '../../../domain/usecases/add-account'
-export * from '../../protocols/ecrypter'
+export * from '../../protocols/encrypter'
