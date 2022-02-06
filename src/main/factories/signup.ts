@@ -6,7 +6,7 @@ import { AccountMongoRepository } from '../../infra/db/mongodb/account-repositor
 import { Controller } from '../../presentation/protocols'
 import { LogControllerDecorator } from '../decorators/log'
 import { LogMongoRepository } from '../../infra/db/mongodb/log-repository/log'
-import { Validation } from '../../presentation/helpers/validators/validation'
+import { makeSignUpValidation } from './signup-validation'
 
 export const makeSignUpController = (): Controller => {
   const salt = 12
@@ -14,14 +14,7 @@ export const makeSignUpController = (): Controller => {
   const addAccountRepository = new AccountMongoRepository()
   const addAccount = new DbAddAccount(encrypter, addAccountRepository)
   const emailValidator = new EmailValidatorAdapter()
-  const validationFake = new ValidationFake()
-  const signUpController = new SignUpController(emailValidator, addAccount, validationFake)
+  const signUpController = new SignUpController(emailValidator, addAccount, makeSignUpValidation())
   const logMongoRepository = new LogMongoRepository()
   return new LogControllerDecorator(signUpController, logMongoRepository)
-}
-
-class ValidationFake implements Validation {
-  validate (input: any): Error | null {
-    return null
-  }
 }
