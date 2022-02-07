@@ -17,7 +17,7 @@ describe('SignUp Routes', () => {
   })
 
   test('Should return an account on success', async () => {
-    await request(app)
+    const response = await request(app)
       .post('/api/signup')
       .send({
         name: 'any_name',
@@ -25,6 +25,9 @@ describe('SignUp Routes', () => {
         password: 'any_password',
         passwordConfirmation: 'any_password'
       })
-      .expect(200)
+    expect(response.status).toEqual(200)
+    expect(response.body.id).toBeTruthy()
+    expect(response.body.name).toEqual('any_name')
+    expect(response.body.email).toEqual('any_email@mail.com')
   })
 })
