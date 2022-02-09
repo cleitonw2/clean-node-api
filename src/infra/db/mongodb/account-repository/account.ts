@@ -21,11 +21,13 @@ LoadAccountByEmailRepository {
     return { id, ...accountData }
   }
 
-  async loadByEmail (email: string): Promise<AccountModel> {
+  async loadByEmail (email: string): Promise<AccountModel | null> {
     const accountCollection = await MongoHelper.geCollection('accounts')
-    const { _id: id, ...rest } = await accountCollection.findOne({ email }) as AccountMongoModel
+    const result = await accountCollection.findOne({ email }) as AccountMongoModel
+    if (!result) return null
+    const { _id, ...rest } = result
     return {
-      id: id.toHexString(),
+      id: _id.toHexString(),
       ...rest
     }
   }
