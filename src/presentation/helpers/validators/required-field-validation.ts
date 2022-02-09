@@ -2,11 +2,7 @@ import { MissingParamError } from '../../errors'
 import { Validation } from '../../protocols/validation'
 
 export class RequiredFieldValidation implements Validation {
-  private readonly fildName: string
-
-  constructor (fildName: string) {
-    this.fildName = fildName
-  }
+  constructor (private readonly fildName: string) {}
 
   validate (input: any): Error | null {
     if (!input[this.fildName]) return new MissingParamError(this.fildName)
