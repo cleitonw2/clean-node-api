@@ -24,11 +24,6 @@ LoadAccountByEmailRepository {
   async loadByEmail (email: string): Promise<AccountModel | null> {
     const accountCollection = await MongoHelper.geCollection('accounts')
     const result = await accountCollection.findOne({ email }) as AccountMongoModel
-    if (!result) return null
-    const { _id, ...rest } = result
-    return {
-      id: _id.toHexString(),
-      ...rest
-    }
+    return result && MongoHelper.map(result)
   }
 }
