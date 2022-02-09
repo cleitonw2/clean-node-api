@@ -4,6 +4,8 @@ import { AccountMongoRepository } from './account'
 
 let accountCollection: Collection
 
+const makeSut = (): AccountMongoRepository => new AccountMongoRepository()
+
 describe('Account Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(String(process.env.MONGO_URL))
@@ -19,7 +21,7 @@ describe('Account Mongo Repository', () => {
   })
 
   test('Should return an account on add success', async () => {
-    const sut = new AccountMongoRepository()
+    const sut = makeSut()
     const account = await sut.add({
       name: 'any_name',
       email: 'any_email@mail.com',
@@ -33,7 +35,7 @@ describe('Account Mongo Repository', () => {
   })
 
   test('Should return an account on loadByEmail success', async () => {
-    const sut = new AccountMongoRepository()
+    const sut = makeSut()
     await accountCollection.insertOne({
       name: 'any_name',
       email: 'any_email@mail.com',
@@ -48,7 +50,7 @@ describe('Account Mongo Repository', () => {
   })
 
   test('Should return null if loadByEmail fails', async () => {
-    const sut = new AccountMongoRepository()
+    const sut = makeSut()
     const account = await sut.loadByEmail('any_email@mail.com')
     expect(account).toBeFalsy()
   })
