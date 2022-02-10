@@ -9,7 +9,7 @@ import { LogMongoRepository } from '../../../infra/db/mongodb/log/log-mongo-repo
 import { LoginController } from '../../../presentation/controllers/login/login-controller'
 import { Controller } from '../../../presentation/protocols'
 
-export const makeSignUpController = (): Controller => {
+export const makeLoginController = (): Controller => {
   const salt = 12
   const bcryptAdapter = new BcryptAdapter(salt)
   const jwtAdapter = new JwtAdapter(env.jwtSecret)
