@@ -88,6 +88,15 @@ describe('Signup Controller', () => {
     expect(httpResponse).toEqual(serverError(new ServerError()))
   })
 
+  test('Should return 500 if Authentication throws', async () => {
+    const { sut, authenticationStub } = makeSut()
+    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, reject) => {
+      reject(new Error())
+    }))
+    const htppResponse = await sut.handle(makeFakeRequest())
+    expect(htppResponse).toEqual(serverError(new Error()))
+  })
+
   test('Should call AddAccount with correct values', async () => {
     const { sut, addAccountStub } = makeSut()
     const addSpy = jest.spyOn(addAccountStub, 'add')
