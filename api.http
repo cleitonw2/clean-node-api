@@ -16,3 +16,19 @@ Content-Type: application/json
   "email": "f@gmail.com",
   "password": "12345"
 }
+###
+POST http://localhost:3000/api/surveys
+Content-Type: application/json
+
+{
+  "question": "new Question",
+  "answers": [
+    {
+      "image": "any_image",
+      "answer": "any_answer"
+    },
+    {
+      "answer": "other_answer"
+    }
+  ]
+}
