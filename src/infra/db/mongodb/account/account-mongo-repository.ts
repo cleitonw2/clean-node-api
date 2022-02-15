@@ -46,7 +46,11 @@ LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRep
     const accountCollection = await MongoHelper.geCollection('accounts')
     const result = await accountCollection.findOne({
       accessToken: token,
-      role
+      $or: [{
+        role
+      }, {
+        role: 'admin'
+      }]
     }) as AccountMongoModel
     return result && MongoHelper.map(result)
   }
