@@ -54,5 +54,12 @@ describe('Survey Mongo Repository', () => {
       expect(surveys[0].id).toBeTruthy()
       expect(surveys[0].question).toBe('valid_question')
     })
+
+    test('Should load empty list', async () => {
+      const sut = makeSut()
+      const surveys = await sut.loadAll()
+      expect(surveys).toBeInstanceOf(Array)
+      expect(surveys).toHaveLength(0)
+    })
   })
 })
