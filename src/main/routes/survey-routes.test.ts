@@ -52,7 +52,6 @@ describe('Survey Routes', () => {
         role: 'admin',
         accessToken
       })
-      console.log(env.jwtSecret)
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
@@ -68,6 +67,15 @@ describe('Survey Routes', () => {
             }
           ]
         }).expect(204)
+    })
+  })
+
+  describe('GET /surveys', () => {
+    test('Should return 403 if load surveys without accessToken', async () => {
+      const response = await request(app)
+        .get('/api/surveys')
+        .send()
+      expect(response.status).toEqual(403)
     })
   })
 })
