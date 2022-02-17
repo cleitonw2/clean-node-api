@@ -8,6 +8,19 @@ import { sign } from 'jsonwebtoken'
 let surveyCollection: Collection
 let accountCollection: Collection
 
+const makeFakeRequest = (): any => ({
+  question: 'new Question',
+  answers: [
+    {
+      image: 'any_image',
+      answer: 'any_answer'
+    },
+    {
+      answer: 'other_answer'
+    }
+  ]
+})
+
 describe('Survey Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(String(process.env.MONGO_URL))
@@ -28,18 +41,7 @@ describe('Survey Routes', () => {
     test('Should return 403 if add survey without accessToken', async () => {
       const response = await request(app)
         .post('/api/surveys')
-        .send({
-          question: 'new Question',
-          answers: [
-            {
-              image: 'any_image',
-              answer: 'any_answer'
-            },
-            {
-              answer: 'other_answer'
-            }
-          ]
-        })
+        .send(makeFakeRequest())
       expect(response.status).toEqual(403)
     })
 
@@ -55,18 +57,7 @@ describe('Survey Routes', () => {
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
-        .send({
-          question: 'new Question',
-          answers: [
-            {
-              image: 'any_image',
-              answer: 'any_answer'
-            },
-            {
-              answer: 'other_answer'
-            }
-          ]
-        }).expect(204)
+        .send(makeFakeRequest()).expect(204)
     })
   })
 
@@ -74,7 +65,7 @@ describe('Survey Routes', () => {
     test('Should return 403 if load surveys without accessToken', async () => {
       const response = await request(app)
         .get('/api/surveys')
-        .send()
+        .send(makeFakeRequest())
       expect(response.status).toEqual(403)
     })
   })
