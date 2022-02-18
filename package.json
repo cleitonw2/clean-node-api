@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc -p tsconfig-build.json",
     "start": "node dist/main/server.js",
     "dev": "ts-node-dev src/main/server.ts",
     "up": "npm run build && docker-compose up -d",
@@ -51,10 +51,14 @@
     "bcrypt": "^5.0.1",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongodb": "^4.3.1",
     "validator": "^13.7.0"
   },
   "engines": {
     "node": "16.x"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   }
 }
