@@ -81,5 +81,17 @@ describe('SurveyResultMongo Repository', () => {
       expect(surveyResult).toBeTruthy()
       expect(surveyResult.id).toBeTruthy()
     })
+
+    test('Should update a survey result if already exists', async () => {
+      const sut = makeSut()
+      const surveyResultData = await makeFakeSurveyResultData()
+      await surveyResultCollection.insertOne(surveyResultData)
+      const survey = await makeFakeSurvey()
+      surveyResultData.answer = survey.answers[1].answer
+      const surveyResult = await sut.save(surveyResultData)
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.id).toBeTruthy()
+      expect(surveyResult.answer).toBe(survey.answers[1].answer)
+    })
   })
 })
