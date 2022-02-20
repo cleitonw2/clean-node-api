@@ -1,4 +1,4 @@
-import { Collection } from 'mongodb'
+import { Collection, ObjectId } from 'mongodb'
 import { AddSurveyModel } from '@/domain/usecases/add-survey'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyMongoRepository } from './survey-mongo-repository'
@@ -70,6 +70,13 @@ describe('Survey Mongo Repository', () => {
       const survey = await sut.loadById(res.insertedId.toHexString())
       expect(survey).toBeTruthy()
       expect(survey.id).toBeTruthy()
+    })
+
+    test('Should return null if load survey by id fails', async () => {
+      const sut = makeSut()
+      const id = new ObjectId()
+      const survey = await sut.loadById(id.toHexString())
+      expect(survey).toBeNull()
     })
   })
 })
