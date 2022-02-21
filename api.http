@@ -38,3 +38,12 @@ x-access-token: any_token
 GET http://localhost:3000/api/surveys
 Content-Type: application/json
 x-access-token: any_token
+
+###
+PUT http://localhost:3000/api/surveys/620b9350103bdd5a3822a8f5/results
+Content-Type: application/json
+x-access-token: any_token
+
+{
+  "answer": "any_answer"
+}
