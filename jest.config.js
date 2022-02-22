@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 
 module.exports = {
-  roots: ['<rootDir>/src'],
+  roots: ['<rootDir>/tests'],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/main/**',
