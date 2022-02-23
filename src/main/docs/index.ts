@@ -1,3 +1,6 @@
+import { loginPath } from './paths'
+import { accountSchema, loginParamsSchema } from './schemas'
+
 export default {
   openapi: '3.0.0',
   info: {
@@ -8,5 +11,18 @@ export default {
       name: 'Cleiton',
       email: 'cleitonwoycik@outlook.com'
     }
+  },
+  servers: [{
+    url: '/api'
+  }],
+  tags: [{
+    name: 'Login'
+  }],
+  paths: {
+    '/login': loginPath
+  },
+  schemas: {
+    account: accountSchema,
+    loginParams: loginParamsSchema
   }
 }

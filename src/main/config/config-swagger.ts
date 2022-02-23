@@ -4,5 +4,6 @@ import swaggerConfig from '@/main/docs'
 import { noCache } from '@/main/middlewares/no-cache'
 
 export default (app: Express): void => {
-  app.use('/api-docs', serve, noCache, setup(swaggerConfig))
+  app.use('/api-docs', noCache, serve)
+  app.get('/api-docs', setup(swaggerConfig))
 }
