@@ -9,3 +9,9 @@ export class EmailValidatorSpy implements EmailValidator {
     return this.isValidEmail
   }
 }
+
+export class EmailValidatorStub implements EmailValidator {
+  isValid (email: string): boolean {
+    return true
+  }
+}
