@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "start": "node dist/main/server.js",
-    "dev": "ts-node-dev src/main/server.ts",
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules ./src/main/server.ts",
     "up": "npm run build && docker-compose up -d",
     "down": "docker-compose down",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
