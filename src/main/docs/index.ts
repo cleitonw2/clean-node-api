@@ -27,8 +27,6 @@ export default {
   }],
   tags: [{
     name: 'Login'
-  }, {
-    name: 'SignUp'
   }],
   paths: {
     '/login': loginPath,
