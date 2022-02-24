@@ -46,6 +46,9 @@ export const surveyPath = {
       204: {
         description: 'Sucesso'
       },
+      400: {
+        $ref: '#/components/badRequest'
+      },
       403: {
         $ref: '#/components/forbidden'
       },
