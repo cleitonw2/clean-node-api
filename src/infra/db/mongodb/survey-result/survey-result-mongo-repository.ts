@@ -4,7 +4,7 @@ import { MongoHelper } from '../helpers/mongo-helper'
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
   async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-    const surveyResultCollection = await MongoHelper.geCollection('surveyResults')
+    const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.findOneAndUpdate({
       surveyId: new ObjectId(data.surveyId),
       accountId: new ObjectId(data.accountId)
@@ -21,7 +21,7 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
   }
 
   private async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
-    const surveyResultCollection = await MongoHelper.geCollection('surveyResults')
+    const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     const query = surveyResultCollection.aggregate([{
       $match: {
         surveyId: new ObjectId(surveyId)

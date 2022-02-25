@@ -7,18 +7,18 @@ import { MongoHelper } from '../helpers/mongo-helper'
 
 export class SurveyMongoRepository implements AddSurveyRepository, LoadSurveysRepository, LoadSurveyByIdRepository {
   async add (data: AddSurveyParams): Promise<void> {
-    const surveyCollection = await MongoHelper.geCollection('surveys')
+    const surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.insertOne(data)
   }
 
   async loadAll (): Promise<SurveyModel[]> {
-    const surveyCollection = await MongoHelper.geCollection('surveys')
+    const surveyCollection = await MongoHelper.getCollection('surveys')
     const result = await surveyCollection.find().toArray()
     return result && MongoHelper.mapCollection(result)
   }
 
   async loadById (id: string): Promise<SurveyModel> {
-    const surveyCollection = await MongoHelper.geCollection('surveys')
+    const surveyCollection = await MongoHelper.getCollection('surveys')
     const result = await surveyCollection.findOne({ _id: new ObjectId(id) })
     return result && MongoHelper.map(result)
   }

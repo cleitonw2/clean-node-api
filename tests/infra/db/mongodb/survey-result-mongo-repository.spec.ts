@@ -31,11 +31,11 @@ describe('SurveyResultMongo Repository', () => {
   })
 
   beforeEach(async () => {
-    surveyCollection = await MongoHelper.geCollection('surveys')
+    surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
-    surveyResultCollection = await MongoHelper.geCollection('surveyResults')
+    surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.deleteMany({})
-    accountCollection = await MongoHelper.geCollection('accounts')
+    accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
