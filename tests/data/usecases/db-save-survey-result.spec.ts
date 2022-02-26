@@ -30,7 +30,7 @@ describe('DbSaveSurveyResult Usecase', () => {
   test('Should call SaveSurveyResultRepository with correct values', async () => {
     const { sut, saveSurveyResultRepositorySpy } = makeSut()
     const saveSurveyResultParams = mockSaveSurveyResultParams()
-    sut.save(saveSurveyResultParams)
+    await sut.save(saveSurveyResultParams)
     expect(saveSurveyResultRepositorySpy.saveSurveyResultParams).toEqual(saveSurveyResultParams)
   })
 
