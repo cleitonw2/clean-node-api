@@ -5,11 +5,9 @@ import { LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/lo
 
 export class SaveSurveyResultRepositorySpy implements SaveSurveyResultRepository {
   saveSurveyResultParams: SaveSurveyResultParams
-  surveyResultModel = mockSurveyResultModel()
 
-  async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
+  async save (data: SaveSurveyResultParams): Promise<void> {
     this.saveSurveyResultParams = data
-    return this.surveyResultModel
   }
 }
 

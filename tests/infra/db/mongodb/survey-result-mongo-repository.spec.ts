@@ -44,19 +44,14 @@ describe('SurveyResultMongo Repository', () => {
       const sut = makeSut()
       const survey = await mockSurvey()
       const accountId = await mockAccountId()
-      const surveyResult = await sut.save({
+      await sut.save({
         surveyId: survey.id,
         accountId,
         answer: survey.answers[0].answer,
         date: new Date()
       })
+      const surveyResult = await surveyResultCollection.findOne({ surveyId: new ObjectId(survey.id) }) as any
       expect(surveyResult).toBeTruthy()
-      expect(surveyResult.surveyId).toEqual(new ObjectId(survey.id))
-      expect(surveyResult.answers[0].answer).toBe(survey.answers[0].answer)
-      expect(surveyResult.answers[0].count).toBe(1)
-      expect(surveyResult.answers[0].percent).toBe(100)
-      expect(surveyResult.answers[1].count).toBe(0)
-      expect(surveyResult.answers[1].percent).toBe(0)
     })
 
     test('Should update a survey result if already exists', async () => {
@@ -69,19 +64,17 @@ describe('SurveyResultMongo Repository', () => {
         answer: survey.answers[0].answer,
         date: new Date()
       })
-      const surveyResult = await sut.save({
+      await sut.save({
         surveyId: survey.id,
         accountId: accountId,
         answer: survey.answers[1].answer,
         date: new Date()
       })
-      expect(surveyResult).toBeTruthy()
-      expect(surveyResult.surveyId).toEqual(new ObjectId(survey.id))
-      expect(surveyResult.answers[0].answer).toBe(survey.answers[1].answer)
-      expect(surveyResult.answers[0].count).toBe(1)
-      expect(surveyResult.answers[0].percent).toBe(100)
-      expect(surveyResult.answers[1].count).toBe(0)
-      expect(surveyResult.answers[1].percent).toBe(0)
+      const surveyResult = await surveyResultCollection.find({
+        surveyId: new ObjectId(survey.id),
+        accountId: new ObjectId(accountId)
+      }).toArray()
+      expect(surveyResult.length).toBe(1)
     })
   })
 
