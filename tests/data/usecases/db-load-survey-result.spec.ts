@@ -1,18 +1,21 @@
 import { DbLoadSurveyResult } from '@/data/usecases/survey-result/load-survey-result/db-load-survey-result'
 import { throwError } from '../../domain/mocks/test-helper'
-import { LoadSurveyResultRepositorySpy } from '../mocks'
+import { LoadSurveyByIdRepositorySpy, LoadSurveyResultRepositorySpy } from '../mocks'
 
 type SutTypes = {
   sut: DbLoadSurveyResult
   loadSurveyResultRepositorySpy: LoadSurveyResultRepositorySpy
+  loadSurveyByIdRepositorySpy: LoadSurveyByIdRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
   const loadSurveyResultRepositorySpy = new LoadSurveyResultRepositorySpy()
-  const sut = new DbLoadSurveyResult(loadSurveyResultRepositorySpy)
+  const loadSurveyByIdRepositorySpy = new LoadSurveyByIdRepositorySpy()
+  const sut = new DbLoadSurveyResult(loadSurveyResultRepositorySpy, loadSurveyByIdRepositorySpy)
   return {
     sut,
-    loadSurveyResultRepositorySpy
+    loadSurveyResultRepositorySpy,
+    loadSurveyByIdRepositorySpy
   }
 }
 
@@ -28,6 +31,13 @@ describe('DbLoadSurveyResult UseCase', () => {
     jest.spyOn(loadSurveyResultRepositorySpy, 'loadBySurveyId').mockRejectedValueOnce(throwError)
     const promise = sut.load('any_survey_id')
     expect(promise).rejects.toThrow()
+  })
+
+  test('Should call LoadSurveyByIdRepository with correct surveyId', async () => {
+    const { sut, loadSurveyResultRepositorySpy, loadSurveyByIdRepositorySpy } = makeSut()
+    loadSurveyResultRepositorySpy.surveyResultModel = null as any
+    await sut.load('any_survey_id')
+    expect(loadSurveyByIdRepositorySpy.id).toBe('any_survey_id')
   })
 
   test('Should return SurveyResultModel on success', async () => {
