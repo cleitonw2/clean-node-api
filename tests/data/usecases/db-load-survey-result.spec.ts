@@ -1,5 +1,5 @@
 import { DbLoadSurveyResult } from '@/data/usecases/survey-result/load-survey-result/db-load-survey-result'
-import { throwError } from '../../domain/mocks/test-helper'
+import { throwError, mockEmptySurveyResultModel } from '@/../tests/domain/mocks'
 import { LoadSurveyByIdRepositorySpy, LoadSurveyResultRepositorySpy } from '../mocks'
 
 type SutTypes = {
@@ -38,6 +38,13 @@ describe('DbLoadSurveyResult UseCase', () => {
     loadSurveyResultRepositorySpy.surveyResultModel = null as any
     await sut.load('any_survey_id')
     expect(loadSurveyByIdRepositorySpy.id).toBe('any_survey_id')
+  })
+
+  test('Should return SurveyResultModel if LoadSurveyByIdRepository returns null', async () => {
+    const { sut, loadSurveyResultRepositorySpy, loadSurveyByIdRepositorySpy } = makeSut()
+    loadSurveyResultRepositorySpy.surveyResultModel = null as any
+    const surveyResult = await sut.load('any_survey_id')
+    expect(surveyResult).toEqual(mockEmptySurveyResultModel(loadSurveyByIdRepositorySpy.suveyModel))
   })
 
   test('Should return SurveyResultModel on success', async () => {
