@@ -175,6 +175,6 @@ SaveSurveyResultRepository, LoadSurveyResultRepository {
       })
       .build() as any
     const surveyResult = await surveyResultCollection.aggregate(query).toArray()
-    return surveyResult?.length ? surveyResult[0] : null as any
+    return surveyResult.length ? surveyResult[0] : null as any
   }
 }
