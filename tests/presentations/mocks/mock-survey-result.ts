@@ -3,6 +3,7 @@ import { SurveyResultModel } from '@/domain/models/survey-result'
 import { SaveSurveyResult, SaveSurveyResultParams } from '@/domain/usecases/survey-result/save-survey-result'
 import { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
 import { mockSurveyModel, mockSurveyResultModel } from '@/../tests/domain/mocks'
+import { LoadSurveyResult } from '@/domain/usecases/survey-result/load-survey-result'
 
 export class LoadSurveyByIdSpy implements LoadSurveyById {
   id: string
@@ -20,6 +21,16 @@ export class SaveSurveyResultSpy implements SaveSurveyResult {
 
   async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
     this.saveSurveyResultParams = data
+    return this.surveyResultModel
+  }
+}
+
+export class LoadSurveyResultSpy implements LoadSurveyResult {
+  surveyResultModel = mockSurveyResultModel()
+  surveyId: string
+
+  async load (surveyId: string): Promise<SurveyResultModel> {
+    this.surveyId = surveyId
     return this.surveyResultModel
   }
 }
