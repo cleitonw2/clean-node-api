@@ -1,4 +1,4 @@
-import { forbidden, serverError } from '@/presentation/helpers/http/http-helper'
+import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
 import { HttpRequest } from '@/presentation/controllers/survey-result/save-survey-result-controllers-protocols'
 import { LoadSurveyResultController } from '@/presentation/controllers/survey-result/load-survey-result/load-survey-result-controller'
@@ -55,5 +55,11 @@ describe('LoadSurveyResult Controller', () => {
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
     expect(loadSurveyResultSpy.surveyId).toBe(httpRequest.params.surveyId)
+  })
+
+  test('Should return 200 on success', async () => {
+    const { sut, loadSurveyResultSpy } = makeSut()
+    const htppResponse = await sut.handle(mockRequest())
+    expect(htppResponse).toEqual(ok(loadSurveyResultSpy.surveyResultModel))
   })
 })
