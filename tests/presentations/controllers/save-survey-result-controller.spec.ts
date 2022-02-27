@@ -1,6 +1,6 @@
 import MockDate from 'mockdate'
-import { HttpRequest } from '@/presentation/controllers/survey-result/save-survey-result-controllers-protocols'
-import { SaveSurveyResultController } from '@/presentation/controllers/survey-result/save-survey-result-controller'
+import { HttpRequest } from '@/presentation/controllers/survey-result/save-survey-result/save-survey-result-controllers-protocols'
+import { SaveSurveyResultController } from '@/presentation/controllers/survey-result/save-survey-result/save-survey-result-controller'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
 import { LoadSurveyByIdSpy, SaveSurveyResultSpy } from '../mocks'
