@@ -1,4 +1,5 @@
 import { AccountModel } from '@/domain/models/account'
+import { AuthenticationModel } from '@/domain/models/authentication'
 import { AddAccountParams } from '@/domain/usecases/account/add-account'
 import { AuthenticationParams } from '@/domain/usecases/account/authentication'
 
@@ -13,6 +14,11 @@ export const mockAccountModel = (): AccountModel => ({
   name: 'any_name',
   email: 'any_email@mail.com',
   password: 'any_password'
+})
+
+export const mockAuthenticationModel = (): AuthenticationModel => ({
+  accessToken: 'any_token',
+  name: 'any_name'
 })
 
 export const mockAuthenticationParams = (): AuthenticationParams => ({

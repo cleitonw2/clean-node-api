@@ -89,10 +89,11 @@ describe('DbAuthentication UseCase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test('Should return an access token on success', async () => {
-    const { sut, encrypterSpy } = makeSut()
-    const accessToken = await sut.auth(mockAuthenticationParams())
-    expect(accessToken).toBe(encrypterSpy.token)
+  test('Should return an access token and the name on success', async () => {
+    const { sut, encrypterSpy, loadAccountByEmailRepositorySpy } = makeSut()
+    const model = await sut.auth(mockAuthenticationParams())
+    expect(model?.accessToken).toBe(encrypterSpy.token)
+    expect(model?.name).toBe(loadAccountByEmailRepositorySpy.accountModel.name)
   })
 
   test('Should call UpdateAccessTokenRepository with correct values', async () => {
