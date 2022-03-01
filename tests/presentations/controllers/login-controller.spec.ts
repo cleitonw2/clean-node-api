@@ -1,7 +1,7 @@
-import { LoginController } from '@/presentation/controllers/account/login/login-controller'
+import { LoginController } from '@/presentation/controllers/login-controller'
 import { MissingParamError } from '@/presentation/errors'
-import { badRequest, serverError, unauthorized, ok } from '@/presentation/helpers/http/http-helper'
-import { HttpRequest } from '@/presentation/controllers/account/login/login-controller-protocols'
+import { badRequest, serverError, unauthorized, ok } from '@/presentation/helpers'
+import { HttpRequest } from '@/presentation/protocols'
 import { AuthenticationSpy, ValidationSpy } from '../mocks'
 import { throwError } from '../../domain/mocks/test-helper'
 

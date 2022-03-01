@@ -1,9 +1,9 @@
-import { SaveSurveyResultRepository } from '@/data/protocols'
-import { LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/load-survey-result-repository'
+import { ObjectId } from 'mongodb'
 import { SurveyResultModel } from '@/domain/models'
 import { SaveSurveyResultParams } from '@/domain/usecases'
-import { ObjectId } from 'mongodb'
-import { MongoHelper, QueryBuilder } from '../helpers'
+import { SaveSurveyResultRepository, LoadSurveyResultRepository } from '@/data/protocols'
+import { MongoHelper } from './mongo-helper'
+import { QueryBuilder } from './query-builder'
 
 export class SurveyResultMongoRepository implements
 SaveSurveyResultRepository, LoadSurveyResultRepository {

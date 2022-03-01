@@ -1,7 +1,7 @@
-import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { forbidden, ok, serverError } from '@/presentation/helpers'
 import { InvalidParamError } from '@/presentation/errors'
-import { HttpRequest } from '@/presentation/controllers/survey-result/save-survey-result/save-survey-result-controllers-protocols'
-import { LoadSurveyResultController } from '@/presentation/controllers/survey-result/load-survey-result/load-survey-result-controller'
+import { HttpRequest } from '@/presentation/protocols'
+import { LoadSurveyResultController } from '@/presentation/controllers'
 import { LoadSurveyByIdSpy, LoadSurveyResultSpy } from '../mocks'
 import { throwError } from '@/../tests/domain/mocks'
 

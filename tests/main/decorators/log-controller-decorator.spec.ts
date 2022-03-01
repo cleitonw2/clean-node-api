@@ -1,4 +1,4 @@
-import { serverError, ok } from '@/presentation/helpers/http/http-helper'
+import { serverError, ok } from '@/presentation/helpers'
 import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
 import { LogControllerDecorator } from '@/main/decorators/log-controller-decorator'
 import { mockAccountModel } from '@/../tests/domain/mocks'

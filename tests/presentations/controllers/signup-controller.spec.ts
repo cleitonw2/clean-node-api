@@ -1,7 +1,7 @@
-import { SignUpController } from '@/presentation/controllers/account/signup/signup-controller'
+import { SignUpController } from '@/presentation/controllers'
+import { HttpRequest } from '@/presentation/protocols'
 import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/errors'
-import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
-import { HttpRequest } from '@/presentation/controllers/account/signup/signup-controller-protocols'
+import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers'
 import { AddAccountSpy, AuthenticationSpy, ValidationSpy } from '../mocks'
 import { throwError } from '../../domain/mocks/test-helper'
 

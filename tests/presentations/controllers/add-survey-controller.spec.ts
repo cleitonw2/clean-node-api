@@ -1,8 +1,8 @@
 import MockDate from 'mockdate'
-import { HttpRequest } from '@/presentation/controllers/survey/add-survey/add-survey-protocols'
+import { AddSurveyController } from '@/presentation/controllers'
 import { MissingParamError } from '@/presentation/errors'
-import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
-import { AddSurveyController } from '@/presentation/controllers/survey/add-survey/add-survey-controller'
+import { badRequest, noContent, serverError } from '@/presentation/helpers'
+import { HttpRequest } from '@/presentation/protocols'
 import { throwError } from '@/../tests/domain/mocks/test-helper'
 import { AddSurveySpy, ValidationSpy } from '../mocks'
 

@@ -1,9 +1,9 @@
 import MockDate from 'mockdate'
-import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helper'
-import { LoadSurveysController } from '@/presentation/controllers/survey/load-surveys/load-surveys-controller'
+import { noContent, ok, serverError } from '@/presentation/helpers'
+import { LoadSurveysController } from '@/presentation/controllers'
+import { HttpRequest } from '@/presentation/protocols'
 import { LoadSurveysSpy } from '../mocks'
 import { throwError } from '@/../tests/domain/mocks/test-helper'
-import { HttpRequest } from '@/presentation/protocols'
 
 const mockRequest = (): HttpRequest => ({ accountId: 'any_account_id' })
 
