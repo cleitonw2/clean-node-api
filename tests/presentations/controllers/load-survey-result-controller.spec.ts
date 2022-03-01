@@ -1,14 +1,12 @@
 import { forbidden, ok, serverError } from '@/presentation/helpers'
 import { InvalidParamError } from '@/presentation/errors'
-import { HttpRequest } from '@/presentation/protocols'
 import { LoadSurveyResultController } from '@/presentation/controllers'
 import { LoadSurveyByIdSpy, LoadSurveyResultSpy } from '../mocks'
 import { throwError } from '@/../tests/domain/mocks'
 
-const mockRequest = (): HttpRequest => ({
-  params: {
-    surveyId: 'any_survey_id'
-  }
+const mockRequest = (): LoadSurveyResultController.Request => ({
+  surveyId: 'any_survey_id',
+  accountId: 'any_account_id'
 })
 
 type SutTypes = {
@@ -29,11 +27,11 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LoadSurveyResult Controller', () => {
-  test('Should call LoadSurveyById with correct values', async () => {
+  test('Should call LoadSurveyById with correct value', async () => {
     const { sut, loadSurveyByIdSpy } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(loadSurveyByIdSpy.id).toBe(httpRequest.params.surveyId)
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(loadSurveyByIdSpy.id).toBe(request.surveyId)
   })
 
   test('Should return 403 if LoadSurveyById returns null', async () => {
@@ -46,15 +44,15 @@ describe('LoadSurveyResult Controller', () => {
   test('Should return 500 if LoadSurveyById throws', async () => {
     const { sut, loadSurveyByIdSpy } = makeSut()
     jest.spyOn(loadSurveyByIdSpy, 'loadById').mockRejectedValueOnce(throwError)
-    const htppResponse = await sut.handle({})
+    const htppResponse = await sut.handle(mockRequest())
     expect(htppResponse).toEqual(serverError(new Error()))
   })
 
   test('Should call LoadSurveyResult with correct surveyId', async () => {
     const { sut, loadSurveyResultSpy } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(loadSurveyResultSpy.surveyId).toBe(httpRequest.params.surveyId)
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(loadSurveyResultSpy.surveyId).toBe(request.surveyId)
   })
 
   test('Should return 500 if LoadSurveyResult throws', async () => {

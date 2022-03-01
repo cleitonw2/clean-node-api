@@ -1,15 +1,12 @@
 import { LoginController } from '@/presentation/controllers/login-controller'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, serverError, unauthorized, ok } from '@/presentation/helpers'
-import { HttpRequest } from '@/presentation/protocols'
 import { AuthenticationSpy, ValidationSpy } from '../mocks'
 import { throwError } from '../../domain/mocks/test-helper'
 
-const mockRequest = (): HttpRequest => ({
-  body: {
-    email: 'any_email@mail.com',
-    password: 'any_password'
-  }
+const mockRequest = (): LoginController.Request => ({
+  email: 'any_email@mail.com',
+  password: 'any_password'
 })
 
 type SutTypes = {
@@ -32,11 +29,11 @@ const makeSut = (): SutTypes => {
 describe('Login Controller', () => {
   test('Should call Authentication with correct values', async () => {
     const { sut, authenticationSpy } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
+    const request = mockRequest()
+    await sut.handle(request)
     expect(authenticationSpy.authenticationParams).toEqual({
-      email: httpRequest.body.email,
-      password: httpRequest.body.password
+      email: request.email,
+      password: request.password
     })
   })
 
@@ -56,16 +53,16 @@ describe('Login Controller', () => {
 
   test('Should return 200 if valid credentials are provided', async () => {
     const { sut, authenticationSpy } = makeSut()
-    const httpRequest = mockRequest()
-    const htppResponse = await sut.handle(httpRequest)
+    const request = mockRequest()
+    const htppResponse = await sut.handle(request)
     expect(htppResponse).toEqual(ok(authenticationSpy.authenticationModel))
   })
 
   test('Should call Validation with correct values', async () => {
     const { sut, validationSpy } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(validationSpy.input).toEqual(httpRequest.body)
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(validationSpy.input).toEqual(request)
   })
 
   test('Should return 400 if Validator return an error', async () => {

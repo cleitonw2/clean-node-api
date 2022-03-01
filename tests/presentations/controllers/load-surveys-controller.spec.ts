@@ -1,11 +1,10 @@
 import MockDate from 'mockdate'
 import { noContent, ok, serverError } from '@/presentation/helpers'
 import { LoadSurveysController } from '@/presentation/controllers'
-import { HttpRequest } from '@/presentation/protocols'
 import { LoadSurveysSpy } from '../mocks'
 import { throwError } from '@/../tests/domain/mocks/test-helper'
 
-const mockRequest = (): HttpRequest => ({ accountId: 'any_account_id' })
+const mockRequest = (): LoadSurveysController.Request => ({ accountId: 'any_account_id' })
 
 type SutTypes = {
   sut: LoadSurveysController

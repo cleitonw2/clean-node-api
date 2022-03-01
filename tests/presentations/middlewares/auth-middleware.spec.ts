@@ -1,14 +1,11 @@
 import { AuthMiddleware } from '@/presentation/middlewares/auth-middleware'
-import { HttpRequest } from '@/presentation/protocols'
 import { AccessDeniedError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers'
 import { LoadAccountByTokenSpy } from '../mocks'
 import { throwError } from '@/../tests/domain/mocks/test-helper'
 
-const mockRequest = (): HttpRequest => ({
-  headers: {
-    'x-access-token': 'any_token'
-  }
+const mockRequest = (): any => ({
+  accessToken: 'any_token'
 })
 
 type SutTypes = {
@@ -28,16 +25,16 @@ const makeSut = (role?: string): SutTypes => {
 describe('Auth Middleware', () => {
   test('Should return 403 if no x-access-token exists in headers', async () => {
     const { sut } = makeSut()
-    const httpResponse = await sut.handle({})
+    const httpResponse = await sut.handle({ accessToken: null as any })
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
   })
 
   test('Should call LoadAccountByToken with correct accessToken and role', async () => {
     const role = 'any_role'
     const { sut, loadAccountByTokenSpy } = makeSut(role)
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(loadAccountByTokenSpy.accessToken).toBe(httpRequest.headers['x-access-token'])
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(loadAccountByTokenSpy.accessToken).toBe(request.accessToken)
     expect(loadAccountByTokenSpy.role).toBe(role)
   })
 
