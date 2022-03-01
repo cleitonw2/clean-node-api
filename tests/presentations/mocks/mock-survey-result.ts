@@ -1,9 +1,9 @@
 import { SurveyModel } from '@/domain/models/survey'
 import { SurveyResultModel } from '@/domain/models/survey-result'
-import { SaveSurveyResult, SaveSurveyResultParams } from '@/domain/usecases/survey-result/save-survey-result'
-import { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
+import { SaveSurveyResult, SaveSurveyResultParams } from '@/domain/usecases/save-survey-result'
+import { LoadSurveyById } from '@/domain/usecases/load-survey-by-id'
 import { mockSurveyModel, mockSurveyResultModel } from '@/../tests/domain/mocks'
-import { LoadSurveyResult } from '@/domain/usecases/survey-result/load-survey-result'
+import { LoadSurveyResult } from '@/domain/usecases/load-survey-result'
 
 export class LoadSurveyByIdSpy implements LoadSurveyById {
   id: string

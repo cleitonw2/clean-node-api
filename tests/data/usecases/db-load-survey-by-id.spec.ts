@@ -1,5 +1,5 @@
 import MockDate from 'mockdate'
-import { DbLoadSurveyById } from '@/data/usecases/survey/load-survey-by-id/db-load-survey-by-id'
+import { DbLoadSurveyById } from '@/data/usecases'
 import { LoadSurveyByIdRepositorySpy } from '../mocks'
 import { throwError } from '../../domain/mocks/test-helper'
 
