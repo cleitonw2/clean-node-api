@@ -20,7 +20,7 @@ SaveSurveyResultRepository, LoadSurveyResultRepository {
     })
   }
 
-  async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
+  async loadBySurveyId (surveyId: string, accountId: string): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     const query = new QueryBuilder()
       .match({
@@ -58,6 +58,11 @@ SaveSurveyResultRepository, LoadSurveyResultRepository {
         },
         count: {
           $sum: 1
+        },
+        currentAccountAnswer: {
+          $push: {
+            $cond: [{ $eq: ['$data.accountId', new ObjectId(accountId)] }, '$data.answer', null]
+          }
         }
       })
       .project({
@@ -92,6 +97,11 @@ SaveSurveyResultRepository, LoadSurveyResultRepository {
                     },
                     else: 0
                   }
+                },
+                isCurrentAccountAnswer: {
+                  $eq: ['$$item.answer', {
+                    $arrayElemAt: ['$currentAccountAnswer', 0]
+                  }]
                 }
               }]
             }
@@ -132,7 +142,8 @@ SaveSurveyResultRepository, LoadSurveyResultRepository {
           question: '$question',
           date: '$date',
           answer: '$answers.answer',
-          image: '$answers.image'
+          image: '$answers.image',
+          isCurrentAccountAnswer: '$answers.isCurrentAccountAnswer'
         },
         count: {
           $sum: '$answers.count'
@@ -149,8 +160,13 @@ SaveSurveyResultRepository, LoadSurveyResultRepository {
         answer: {
           answer: '$_id.answer',
           image: '$_id.image',
-          count: '$count',
-          percent: '$percent'
+          count: {
+            $round: ['$count']
+          },
+          percent: {
+            $round: ['$percent']
+          },
+          isCurrentAccountAnswer: '$_id.isCurrentAccountAnswer'
         }
       })
       .sort({
@@ -173,7 +189,7 @@ SaveSurveyResultRepository, LoadSurveyResultRepository {
         date: '$_id.date',
         answers: '$answers'
       })
-      .build() as any
+      .build()
     const surveyResult = await surveyResultCollection.aggregate(query).toArray()
     return surveyResult.length ? surveyResult[0] : null as any
   }
