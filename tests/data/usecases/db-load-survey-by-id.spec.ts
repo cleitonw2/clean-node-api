@@ -1,4 +1,3 @@
-import MockDate from 'mockdate'
 import { DbLoadSurveyById } from '@/data/usecases'
 import { LoadSurveyByIdRepositorySpy } from '../mocks'
 import { throwError } from '../../domain/mocks/test-helper'
@@ -18,14 +17,6 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbLoadSurveyById', () => {
-  beforeAll(() => {
-    MockDate.set(new Date())
-  })
-
-  afterAll(() => {
-    MockDate.reset()
-  })
-
   test('Should call LoadSurveyByIdRepsoitory with correct id', async () => {
     const { sut, loadSurveyByIdRepositorySpy } = makeSut()
     await sut.loadById('any_id')
@@ -35,7 +26,7 @@ describe('DbLoadSurveyById', () => {
   test('Should return Survey on success', async () => {
     const { sut, loadSurveyByIdRepositorySpy } = makeSut()
     const surveys = await sut.loadById('any_id')
-    expect(surveys).toEqual(loadSurveyByIdRepositorySpy.suveyModel)
+    expect(surveys).toEqual(loadSurveyByIdRepositorySpy.result)
   })
 
   test('Should throw if LoadSurveyByIdRepository throws', async () => {

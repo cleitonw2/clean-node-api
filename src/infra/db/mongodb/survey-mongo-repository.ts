@@ -49,7 +49,7 @@ LoadSurveyByIdRepository {
     return MongoHelper.mapCollection(surveys)
   }
 
-  async loadById (id: string): Promise<SurveyModel> {
+  async loadById (id: string): Promise<LoadSurveyByIdRepository.Result> {
     const surveyCollection = await this.getCollection()
     const result = await surveyCollection.findOne({ _id: new ObjectId(id) })
     return result && MongoHelper.map(result)
