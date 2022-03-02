@@ -1,6 +1,5 @@
-import { AccountModel } from '@/domain/models/account'
 import { Authentication, AddAccount, LoadAccountByToken } from '@/domain/usecases'
-import { mockAccountModel, mockAuthenticationModel } from '@/../tests/domain/mocks'
+import { mockAuthenticationModel } from '@/../tests/domain/mocks'
 
 export class AddAccountSpy implements AddAccount {
   addAccount: AddAccount.Params
@@ -25,14 +24,16 @@ export class AuthenticationSpy implements Authentication {
 export class LoadAccountByTokenSpy implements LoadAccountByToken {
   role?: string
   accessToken: string
-  accountModel = mockAccountModel()
+  accountResult = {
+    id: 'any_id'
+  }
 
   constructor (role?: string) {
     this.role = role
   }
 
-  async loadByToken (accessToken: string): Promise<AccountModel | null> {
+  async loadByToken (accessToken: string): Promise<LoadAccountByToken.Result | null> {
     this.accessToken = accessToken
-    return this.accountModel
+    return this.accountResult
   }
 }

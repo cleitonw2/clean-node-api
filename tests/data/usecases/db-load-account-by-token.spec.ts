@@ -1,5 +1,5 @@
 import { DbLoadAccountByToken } from '@/data/usecases'
-import { throwError } from '../../domain/mocks/test-helper'
+import { throwError } from '@/../tests/domain/mocks/test-helper'
 import { DecrypterSpy, LoadAccountByTokenRepositorySpy } from '../mocks'
 
 type SutTypes = {
@@ -42,15 +42,15 @@ describe('DbLoadAccountByToken Usecase', () => {
 
   test('Should return null if LoadAccountBytokenRepository returns null', async () => {
     const { sut, loadAccountByTokenRepositorySpy } = makeSut()
-    loadAccountByTokenRepositorySpy.accountModel = null as any
+    loadAccountByTokenRepositorySpy.accountResult = null as any
     const account = await sut.loadByToken('any_token', 'any_role')
     expect(account).toBeNull()
   })
 
-  test('Should return an account on success', async () => {
+  test('Should return an account id on success', async () => {
     const { sut, loadAccountByTokenRepositorySpy } = makeSut()
     const account = await sut.loadByToken('any_token', 'any_role')
-    expect(account).toEqual(loadAccountByTokenRepositorySpy.accountModel)
+    expect(account?.id).toBe(loadAccountByTokenRepositorySpy.accountResult.id)
   })
 
   test('Should return null if Decrypter throws', async () => {

@@ -96,7 +96,6 @@ describe('SurveyResultMongo Repository', () => {
         date: new Date()
       }])
       const surveyResult = await sut.loadBySurveyId(survey.id, accountId)
-      console.log(surveyResult)
       expect(surveyResult).toBeTruthy()
       expect(surveyResult.surveyId).toEqual(new ObjectId(survey.id))
       expect(surveyResult.answers[0].count).toBe(2)
