@@ -1,11 +1,10 @@
 import { serverError, ok } from '@/presentation/helpers'
 import { Controller, HttpResponse } from '@/presentation/protocols'
 import { LogControllerDecorator } from '@/main/decorators/log-controller-decorator'
-import { mockAccountModel } from '@/../tests/domain/mocks'
 import { LogErrorRepositorySpy } from '@/../tests/data/mocks'
 
 class ControllerSpy implements Controller {
-  httpResponse: HttpResponse = ok(mockAccountModel())
+  httpResponse: HttpResponse = ok({ value: 'any_value' })
   request: any
 
   async handle (request: any): Promise<HttpResponse> {

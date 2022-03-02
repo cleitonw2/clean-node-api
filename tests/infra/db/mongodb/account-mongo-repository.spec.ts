@@ -39,13 +39,12 @@ describe('Account Mongo Repository', () => {
       expect(account).toBeTruthy()
       expect(account?.id).toBeTruthy()
       expect(account?.name).toBe(addAccountParams.name)
-      expect(account?.email).toBe(addAccountParams.email)
       expect(account?.password).toBe(addAccountParams.password)
     })
 
     test('Should return null if loadByEmail fails', async () => {
       const sut = makeSut()
-      const account = await sut.loadByEmail('any_email@mail.com')
+      const account = await sut.loadByEmail('invalid_email@mail.com')
       expect(account).toBeFalsy()
     })
   })

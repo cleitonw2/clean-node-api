@@ -1,7 +1,5 @@
-import { AccountModel } from '@/domain/models'
 import { AddAccount } from '@/domain/usecases'
 import { AddAccountRepository, LoadAccountByTokenRepository, UpdateAccessTokenRepository } from '@/data/protocols/db'
-import { mockAccountModel } from '@/../tests/domain/mocks'
 import { LoadAccountByEmailRepository } from '../protocols'
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
@@ -16,11 +14,15 @@ export class AddAccountRepositorySpy implements AddAccountRepository {
 
 export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailRepository {
   email: string
-  accountModel: AccountModel = mockAccountModel()
+  resutl = {
+    id: 'any_id',
+    name: 'any_name',
+    password: 'any_password'
+  }
 
-  async loadByEmail (email: string): Promise<AccountModel | null> {
+  async loadByEmail (email: string): Promise<LoadAccountByEmailRepository.Result> {
     this.email = email
-    return this.accountModel
+    return this.resutl
   }
 }
 
