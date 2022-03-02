@@ -1,17 +1,25 @@
-import { SurveyModel } from '@/domain/models/survey'
-import { SurveyResultModel } from '@/domain/models/survey-result'
+import { SurveyResultModel } from '@/domain/models'
+import { CheckSurveyById, LoadSurveyById, LoadSurveyResult } from '@/domain/usecases'
 import { SaveSurveyResult, SaveSurveyResultParams } from '@/domain/usecases/save-survey-result'
-import { LoadSurveyById } from '@/domain/usecases/load-survey-by-id'
 import { mockSurveyModel, mockSurveyResultModel } from '@/../tests/domain/mocks'
-import { LoadSurveyResult } from '@/domain/usecases/load-survey-result'
 
 export class LoadSurveyByIdSpy implements LoadSurveyById {
   id: string
-  surveyModel: SurveyModel = mockSurveyModel()
+  surveyModel = mockSurveyModel()
 
-  async loadById (id: string): Promise<SurveyModel> {
+  async loadById (id: string): Promise<LoadSurveyById.Result> {
     this.id = id
     return this.surveyModel
+  }
+}
+
+export class CheckSurveyByIdSpy implements CheckSurveyById {
+  id: string
+  result: boolean = true
+
+  async checkById (id: string): Promise<CheckSurveyById.Result> {
+    this.id = id
+    return this.result
   }
 }
 
@@ -26,11 +34,13 @@ export class SaveSurveyResultSpy implements SaveSurveyResult {
 }
 
 export class LoadSurveyResultSpy implements LoadSurveyResult {
-  surveyResultModel = mockSurveyResultModel()
+  result = mockSurveyResultModel()
   surveyId: string
+  accountId: string
 
-  async load (surveyId: string): Promise<SurveyResultModel> {
+  async load (surveyId: string, accountId: string): Promise<SurveyResultModel> {
+    this.accountId = accountId
     this.surveyId = surveyId
-    return this.surveyResultModel
+    return this.result
   }
 }
