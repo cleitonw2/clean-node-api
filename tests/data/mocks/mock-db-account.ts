@@ -1,6 +1,6 @@
 import { AddAccount } from '@/domain/usecases'
 import { AddAccountRepository, LoadAccountByTokenRepository, UpdateAccessTokenRepository } from '@/data/protocols/db'
-import { LoadAccountByEmailRepository } from '../protocols'
+import { LoadAccountByEmailRepository, CheckAccountByEmailRepository } from '../protocols'
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
   accountResult = true
@@ -9,6 +9,16 @@ export class AddAccountRepositorySpy implements AddAccountRepository {
   async add (data: AddAccount.Params): Promise<AddAccount.Result> {
     this.addAccountParams = data
     return this.accountResult
+  }
+}
+
+export class CheckAccountByEmailRepositorySpy implements CheckAccountByEmailRepository {
+  email: string
+  resutl = false
+
+  async checkByEmail (email: string): Promise<CheckAccountByEmailRepository.Result> {
+    this.email = email
+    return this.resutl
   }
 }
 
