@@ -1,18 +1,23 @@
-import { ObjectId } from 'mongodb'
+import { Collection, ObjectId } from 'mongodb'
 import { SurveyModel } from '@/domain/models/survey'
 import { AddSurvey } from '@/domain/usecases'
 import { AddSurveyRepository, LoadSurveyByIdRepository, LoadSurveysRepository } from '@/data/protocols'
 import { MongoHelper } from './mongo-helper'
 import { QueryBuilder } from './query-builder'
 
-export class SurveyMongoRepository implements AddSurveyRepository, LoadSurveysRepository, LoadSurveyByIdRepository {
+export class SurveyMongoRepository implements AddSurveyRepository, LoadSurveysRepository,
+LoadSurveyByIdRepository {
+  private async getCollection (): Promise<Collection> {
+    return await MongoHelper.getCollection('surveys')
+  }
+
   async add (data: AddSurvey.Params): Promise<void> {
-    const surveyCollection = await MongoHelper.getCollection('surveys')
+    const surveyCollection = await this.getCollection()
     await surveyCollection.insertOne(data)
   }
 
   async loadAll (accountId: string): Promise<SurveyModel[]> {
-    const surveyCollection = await MongoHelper.getCollection('surveys')
+    const surveyCollection = await this.getCollection()
     const query = new QueryBuilder()
       .lookup({
         from: 'surveyResults',
@@ -45,7 +50,7 @@ export class SurveyMongoRepository implements AddSurveyRepository, LoadSurveysRe
   }
 
   async loadById (id: string): Promise<SurveyModel> {
-    const surveyCollection = await MongoHelper.getCollection('surveys')
+    const surveyCollection = await this.getCollection()
     const result = await surveyCollection.findOne({ _id: new ObjectId(id) })
     return result && MongoHelper.map(result)
   }
