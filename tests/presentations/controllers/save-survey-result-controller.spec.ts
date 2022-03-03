@@ -88,6 +88,6 @@ describe('SaveSurveyResult Controller', () => {
   test('Should return 200 on success', async () => {
     const { sut, saveSurveyResultSpy } = makeSut()
     const htppResponse = await sut.handle(mockRequest())
-    expect(htppResponse).toEqual(ok(saveSurveyResultSpy.surveyResultModel))
+    expect(htppResponse).toEqual(ok(saveSurveyResultSpy.result))
   })
 })

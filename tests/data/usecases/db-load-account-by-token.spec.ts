@@ -42,7 +42,7 @@ describe('DbLoadAccountByToken Usecase', () => {
 
   test('Should return null if LoadAccountBytokenRepository returns null', async () => {
     const { sut, loadAccountByTokenRepositorySpy } = makeSut()
-    loadAccountByTokenRepositorySpy.accountResult = null as any
+    loadAccountByTokenRepositorySpy.result = null as any
     const account = await sut.loadByToken('any_token', 'any_role')
     expect(account).toBeNull()
   })
@@ -50,7 +50,7 @@ describe('DbLoadAccountByToken Usecase', () => {
   test('Should return an account id on success', async () => {
     const { sut, loadAccountByTokenRepositorySpy } = makeSut()
     const account = await sut.loadByToken('any_token', 'any_role')
-    expect(account?.id).toBe(loadAccountByTokenRepositorySpy.accountResult.id)
+    expect(account?.id).toBe(loadAccountByTokenRepositorySpy.result.id)
   })
 
   test('Should return null if Decrypter throws', async () => {

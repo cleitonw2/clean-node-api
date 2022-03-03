@@ -3,28 +3,28 @@ import { AddAccountRepository, LoadAccountByTokenRepository, UpdateAccessTokenRe
 import { LoadAccountByEmailRepository, CheckAccountByEmailRepository } from '../protocols'
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
-  accountResult = true
+  result: boolean = true
   addAccountParams: AddAccount.Params
 
   async add (data: AddAccount.Params): Promise<AddAccount.Result> {
     this.addAccountParams = data
-    return this.accountResult
+    return this.result
   }
 }
 
 export class CheckAccountByEmailRepositorySpy implements CheckAccountByEmailRepository {
   email: string
-  resutl = false
+  result = false
 
   async checkByEmail (email: string): Promise<CheckAccountByEmailRepository.Result> {
     this.email = email
-    return this.resutl
+    return this.result
   }
 }
 
 export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailRepository {
   email: string
-  resutl = {
+  result = {
     id: 'any_id',
     name: 'any_name',
     password: 'any_password'
@@ -32,21 +32,21 @@ export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailReposi
 
   async loadByEmail (email: string): Promise<LoadAccountByEmailRepository.Result> {
     this.email = email
-    return this.resutl
+    return this.result
   }
 }
 
 export class LoadAccountByTokenRepositorySpy implements LoadAccountByTokenRepository {
   token: string
   role?: string
-  accountResult = {
+  result = {
     id: 'any_id'
   }
 
   async loadByToken (token: string, role?: string): Promise<LoadAccountByTokenRepository.Result | null> {
     this.token = token
     this.role = role
-    return this.accountResult
+    return this.result
   }
 }
 

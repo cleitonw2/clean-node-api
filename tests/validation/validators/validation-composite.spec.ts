@@ -22,17 +22,17 @@ const makeSut = (): SutTypes => {
 describe('Validation Composite', () => {
   test('Should return an error if any validation fails', () => {
     const { sut, validationSpies } = makeSut()
-    validationSpies[1].error = new MissingParamError('field')
+    validationSpies[1].result = new MissingParamError('field')
     const error = sut.validate({ field: 'any_value' })
-    expect(error).toEqual(validationSpies[1].error)
+    expect(error).toEqual(validationSpies[1].result)
   })
 
   test('Should return the first error if more then one validation fails', () => {
     const { sut, validationSpies } = makeSut()
-    validationSpies[0].error = new Error()
-    validationSpies[1].error = new MissingParamError('field')
+    validationSpies[0].result = new Error()
+    validationSpies[1].result = new MissingParamError('field')
     const error = sut.validate({ field: 'any_value' })
-    expect(error).toEqual(validationSpies[0].error)
+    expect(error).toEqual(validationSpies[0].result)
   })
 
   test('Should return null if validation succeeds', () => {

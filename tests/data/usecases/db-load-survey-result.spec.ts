@@ -36,14 +36,14 @@ describe('DbLoadSurveyResult UseCase', () => {
 
   test('Should call LoadSurveyByIdRepository with correct surveyId', async () => {
     const { sut, loadSurveyResultRepositorySpy, loadSurveyByIdRepositorySpy } = makeSut()
-    loadSurveyResultRepositorySpy.surveyResultModel = null as any
+    loadSurveyResultRepositorySpy.result = null as any
     await sut.load('any_survey_id', 'any_account_id')
     expect(loadSurveyByIdRepositorySpy.id).toBe('any_survey_id')
   })
 
   test('Should return SurveyResultModel if LoadSurveyByIdRepository returns null', async () => {
     const { sut, loadSurveyResultRepositorySpy, loadSurveyByIdRepositorySpy } = makeSut()
-    loadSurveyResultRepositorySpy.surveyResultModel = null as any
+    loadSurveyResultRepositorySpy.result = null as any
     const surveyResult = await sut.load('any_survey_id', 'any_account_id')
     expect(surveyResult).toEqual(mockEmptySurveyResultModel(loadSurveyByIdRepositorySpy.result))
   })
@@ -51,6 +51,6 @@ describe('DbLoadSurveyResult UseCase', () => {
   test('Should return SurveyResultModel on success', async () => {
     const { sut, loadSurveyResultRepositorySpy } = makeSut()
     const surveyResult = await sut.load('any_survey_id', 'any_account_id')
-    expect(surveyResult).toEqual(loadSurveyResultRepositorySpy.surveyResultModel)
+    expect(surveyResult).toEqual(loadSurveyResultRepositorySpy.result)
   })
 })

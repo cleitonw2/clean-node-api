@@ -56,7 +56,7 @@ describe('Signup Controller', () => {
 
   test('Should return 403 if AddAccount returns null', async () => {
     const { sut, addAccountSpy } = makeSut()
-    addAccountSpy.accountModel = null as any
+    addAccountSpy.result = null as any
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new EmailInUseError()))
   })
@@ -75,7 +75,7 @@ describe('Signup Controller', () => {
   test('Should return an accessToken and the name if valid data is provided', async () => {
     const { sut, authenticationSpy } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok(authenticationSpy.authenticationResult))
+    expect(httpResponse).toEqual(ok(authenticationSpy.result))
   })
 
   test('Should call Validation with correct values', async () => {

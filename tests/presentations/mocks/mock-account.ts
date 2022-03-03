@@ -3,28 +3,28 @@ import { mockAuthenticationModel } from '@/../tests/domain/mocks'
 
 export class AddAccountSpy implements AddAccount {
   addAccount: AddAccount.Params
-  accountModel = true
+  result: boolean = true
 
   async add (account: AddAccount.Params): Promise<AddAccount.Result> {
     this.addAccount = account
-    return this.accountModel
+    return this.result
   }
 }
 
 export class AuthenticationSpy implements Authentication {
   authenticationParams: Authentication.Params
-  authenticationResult = mockAuthenticationModel()
+  result = mockAuthenticationModel()
 
   async auth (authentication: Authentication.Params): Promise<Authentication.Result> {
     this.authenticationParams = authentication
-    return this.authenticationResult
+    return this.result
   }
 }
 
 export class LoadAccountByTokenSpy implements LoadAccountByToken {
   role?: string
   accessToken: string
-  accountResult = {
+  result = {
     id: 'any_id'
   }
 
@@ -34,6 +34,6 @@ export class LoadAccountByTokenSpy implements LoadAccountByToken {
 
   async loadByToken (accessToken: string): Promise<LoadAccountByToken.Result | null> {
     this.accessToken = accessToken
-    return this.accountResult
+    return this.result
   }
 }

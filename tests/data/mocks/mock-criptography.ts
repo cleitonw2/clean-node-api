@@ -4,34 +4,34 @@ import { Encrypter } from '@/data/protocols/criptography/encrypter'
 import { Decrypter } from '../protocols/criptography/decrypter'
 
 export class HasherSpy implements Hasher {
-  hashedPassword = 'any_password'
+  result = 'any_password'
   value: string
 
   async hash (value: string): Promise<string> {
     this.value = value
-    return this.hashedPassword
+    return this.result
   }
 }
 
 export class HashComparerSpy implements HashComparer {
   value: string
   hash: string
-  isvalid = true
+  result: boolean = true
 
   async compare (value: string, hash: string): Promise<boolean> {
     this.value = value
     this.hash = hash
-    return this.isvalid
+    return this.result
   }
 }
 
 export class EncrypterSpy implements Encrypter {
   value: string
-  token = 'any_token'
+  result = 'any_token'
 
   async encrypt (value: string): Promise<string> {
     this.value = value
-    return this.token
+    return this.result
   }
 }
 
