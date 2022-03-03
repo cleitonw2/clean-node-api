@@ -4,6 +4,7 @@ import { AddSurvey } from '@/domain/usecases'
 import {
   AddSurveyRepository,
   CheckSurveyByIdRepository,
+  LoadAnswersBySurveyRepository,
   LoadSurveyByIdRepository,
   LoadSurveysRepository
 } from '@/data/protocols'
@@ -11,7 +12,7 @@ import { MongoHelper } from './mongo-helper'
 import { QueryBuilder } from './query-builder'
 
 export class SurveyMongoRepository implements AddSurveyRepository, LoadSurveysRepository,
-LoadSurveyByIdRepository, CheckSurveyByIdRepository {
+LoadSurveyByIdRepository, CheckSurveyByIdRepository, LoadAnswersBySurveyRepository {
   private async getCollection (): Promise<Collection> {
     return await MongoHelper.getCollection('surveys')
   }
@@ -58,6 +59,21 @@ LoadSurveyByIdRepository, CheckSurveyByIdRepository {
     const surveyCollection = await this.getCollection()
     const result = await surveyCollection.findOne({ _id: new ObjectId(id) })
     return result && MongoHelper.map(result)
+  }
+
+  async loadAnswers (id: string): Promise<LoadAnswersBySurveyRepository.Result> {
+    const surveyCollection = await this.getCollection()
+    const query = new QueryBuilder()
+      .match({
+        _id: new ObjectId(id)
+      })
+      .project({
+        _id: 0,
+        answers: '$answers.answer'
+      })
+      .build()
+    const surveys = await surveyCollection.aggregate(query).toArray()
+    return surveys[0]?.answers || []
   }
 
   async checkById (id: string): Promise<boolean> {
