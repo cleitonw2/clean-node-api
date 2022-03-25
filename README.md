@@ -12,6 +12,10 @@ O objetivo do treinamento é mostrar como criar uma API com uma arquitetura bem 
 1. [Responder enquete](./requirements/answer-survey.md)
 1. [Resultado da enquete](./requirements/survey-result.md)
 
+> ## Rodando o projeto
+* npm i && npm run up
+* localhost:3000/api-docs
+
 > ## Princípios aplicados:
 * Single Responsibility Principle (SRP)
 * Open Closed Principle (OCP)
@@ -51,6 +55,7 @@ O objetivo do treinamento é mostrar como criar uma API com uma arquitetura bem 
 * Eslint
 * Standard Javascript Style
 * Sucrase
+* swagger
 > ## Features abordadas:
 * Atalhos no Git
 * Log de Erro
@@ -65,5 +70,6 @@ O objetivo do treinamento é mostrar como criar uma API com uma arquitetura bem 
 * Spies
 * Deploy com Typescript
 * Deploy no Heroku
+* CI/CD com github workflows
 * Uso de breakpoints no Typescript
 * Uso correto de tags no Git
